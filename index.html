@@ -1,486 +1,520 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>iSignal</title>
-  <link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@1,700&display=swap" rel="stylesheet" />
-  <style>
-    :root {
-      --bg: #0a0a0f;
-      --surface: #111118;
-      --border: #1e1e2e;
-      --accent: #c0392b;
-      --accent-dim: #7c1d0f;
-      --text: #e8e8f0;
-      --muted: #888899;
-      --green: #27ae60;
-      --amber: #e67e22;
-      --red: #c0392b;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>iSignal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --navy: #0a2a5e;
+    --navy-light: #0f3470;
+    --blue-accent: #6ab0f3;
+    --blue-link: #1a5dab;
+    --red: #c0211d;
+    --red-dark: #a01b18;
+    --bg-page: #f4f5f8;
+    --bg-card: #ffffff;
+    --bg-input: #f0f2f6;
+    --border: #dde0e8;
+    --border-light: #e8eaef;
+    --text-primary: #1a2332;
+    --text-secondary: #5a6577;
+    --text-muted: #8a93a3;
+    --text-hint: #b0b6c3;
+  }
 
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: 'Georgia', serif;
-      min-height: 100vh;
-    }
+  body {
+    font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: var(--bg-page);
+    color: var(--text-primary);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
 
-    nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 18px 32px;
-      border-bottom: 1px solid var(--border);
-      background: var(--surface);
-    }
+  /* === LAYOUT === */
+  .page-wrapper {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
 
-    nav .brand {
-      font-family: 'Courier New', monospace;
-      font-size: 13px;
-      letter-spacing: 0.15em;
-      color: var(--muted);
-    }
+  .main-content {
+    flex: 1;
+    max-width: 680px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 16px;
+  }
 
-    nav .brand span { color: var(--text); font-style: italic; }
+  /* === HEADER === */
+  .header {
+    background: var(--navy);
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
 
-    nav a {
-      font-family: 'Courier New', monospace;
-      font-size: 11px;
-      color: var(--muted);
-      text-decoration: none;
-      letter-spacing: 0.1em;
-      border-bottom: 1px solid var(--border);
-      padding-bottom: 2px;
-    }
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
 
-    nav a:hover { color: var(--text); border-color: var(--muted); }
+  .logo {
+    font-weight: 800;
+    font-size: 20px;
+    letter-spacing: 0.3px;
+    text-decoration: none;
+  }
 
-    .badge {
-      font-family: 'Courier New', monospace;
-      font-size: 10px;
-      letter-spacing: 0.12em;
-      color: var(--green);
-      background: rgba(39,174,96,0.08);
-      border: 1px solid rgba(39,174,96,0.2);
-      padding: 3px 8px;
-      border-radius: 2px;
-    }
+  .logo .i { color: var(--blue-accent); }
+  .logo .signal { color: var(--red); }
 
-    .hero {
-      max-width: 680px;
-      margin: 0 auto;
-      padding: 72px 24px 48px;
-      text-align: center;
-    }
+  .badge-live {
+    background: rgba(255,255,255,0.12);
+    color: var(--blue-accent);
+    font-size: 11px;
+    font-weight: 500;
+    padding: 3px 10px;
+    border-radius: 20px;
+    letter-spacing: 0.3px;
+  }
 
-    .hero h1 {
-      font-size: clamp(42px, 8vw, 72px);
-      font-family: 'Spectral', Georgia, serif;
-      font-style: italic;
-      font-weight: 700;
-      letter-spacing: 0.01em;
-      line-height: 1;
-      margin-bottom: 16px;
-    }
+  .header-link {
+    color: var(--blue-accent);
+    font-size: 12px;
+    font-weight: 500;
+    text-decoration: none;
+    opacity: 0.8;
+    transition: opacity 0.2s;
+  }
 
-    .hero h1 span { color: var(--accent); }
+  .header-link:hover { opacity: 1; }
 
-    .hero p {
-      color: var(--muted);
-      font-size: 15px;
-      line-height: 1.7;
-      max-width: 480px;
-      margin: 0 auto 20px;
-    }
+  /* === HERO === */
+  .hero {
+    background: var(--bg-card);
+    text-align: center;
+    padding: 48px 24px 40px;
+    border-bottom: 1px solid var(--border-light);
+  }
 
-    .form-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      padding: 32px;
-      max-width: 600px;
-      margin: 0 auto;
-    }
+  .hero-logo {
+    font-weight: 800;
+    font-size: 52px;
+    letter-spacing: 0.5px;
+    margin-bottom: 10px;
+  }
 
-    .field { margin-bottom: 20px; }
+  .hero-logo .i { color: var(--blue-accent); }
+  .hero-logo .signal { color: var(--red); }
 
-    .field label {
-      display: block;
-      font-family: 'Courier New', monospace;
-      font-size: 10px;
-      letter-spacing: 0.15em;
-      color: var(--muted);
-      text-transform: uppercase;
-      margin-bottom: 8px;
-    }
+  .hero-sub {
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--text-secondary);
+    max-width: 420px;
+    margin: 0 auto;
+  }
 
-    .field label .optional {
-      color: #ccccdd;
-      font-size: 9px;
-      letter-spacing: 0.08em;
-      margin-left: 6px;
-      text-transform: none;
-    }
+  /* === FORM === */
+  .form-section {
+    background: var(--bg-card);
+    padding: 24px;
+    border-bottom: 1px solid var(--border-light);
+  }
 
-    .field input,
-    .field textarea {
-      width: 100%;
-      background: #16161f;
-      border: 1px solid var(--border);
-      border-radius: 3px;
-      color: #e8e8f0;
-      font-family: 'Courier New', monospace;
-      font-size: 13px;
-      padding: 12px 14px;
-      transition: border-color 0.2s;
-      outline: none;
-      resize: none;
-    }
+  .input-group { margin-bottom: 10px; }
 
-    .field textarea {
-      height: 80px;
-      line-height: 1.5;
-    }
+  .input-field {
+    width: 100%;
+    background: var(--bg-input);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 11px 14px;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--text-primary);
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
 
-    .field input:focus,
-    .field textarea:focus {
-      border-color: var(--accent);
-    }
+  .input-field::placeholder { color: var(--text-hint); font-weight: 400; }
+  .input-field:focus {
+    border-color: var(--blue-accent);
+    box-shadow: 0 0 0 3px rgba(106, 176, 243, 0.15);
+  }
 
-    .field input::placeholder,
-    .field textarea::placeholder {
-      color: #9999aa;
-    }
+  textarea.input-field {
+    resize: vertical;
+    min-height: 60px;
+  }
 
-    .submit-btn {
-      width: 100%;
-      background: var(--accent);
-      color: #fff;
-      border: none;
-      border-radius: 3px;
-      font-family: 'Courier New', monospace;
-      font-size: 12px;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      padding: 14px;
-      cursor: pointer;
-      transition: background 0.2s;
-      margin-top: 4px;
-    }
+  .submit-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 14px;
+  }
 
-    .submit-btn:hover { background: #a93226; }
-    .submit-btn:disabled { background: #333; cursor: not-allowed; }
+  .submit-row .input-field { flex: 1; }
 
-    #status {
-      margin-top: 16px;
-      font-family: 'Courier New', monospace;
-      font-size: 12px;
-      text-align: center;
-      min-height: 20px;
-      letter-spacing: 0.05em;
-    }
+  .btn-submit {
+    background: var(--navy);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 11px 24px;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+    white-space: nowrap;
+  }
 
-    #status.success { color: var(--green); }
-    #status.error   { color: var(--red); }
-    #status.pending { color: var(--amber); }
+  .btn-submit:hover { background: var(--navy-light); }
 
-    .checklist {
-      display: flex;
-      gap: 20px;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin-top: 24px;
-    }
+  .form-features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 4px;
+  }
 
-    .checklist span {
-      font-family: 'Courier New', monospace;
-      font-size: 11px;
-      color: var(--muted);
-      letter-spacing: 0.05em;
-    }
+  .feature-tag {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-muted);
+    background: var(--bg-input);
+    padding: 4px 10px;
+    border-radius: 20px;
+  }
 
-    .checklist span::before {
-      content: '✓ ';
-      color: var(--green);
-    }
+  /* === STATS === */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--border-light);
+  }
 
-    .stats {
-      display: flex;
-      justify-content: center;
-      gap: 48px;
-      padding: 48px 24px;
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      margin: 64px 0;
-    }
+  .stat-cell {
+    background: var(--bg-card);
+    padding: 20px 12px;
+    text-align: center;
+  }
 
-    .stat { text-align: center; }
+  .stat-number {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 1;
+  }
 
-    .stat .num {
-      font-size: 32px;
-      font-weight: 400;
-      font-style: italic;
-      color: var(--text);
-      display: block;
-    }
+  .stat-label {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-muted);
+    margin-top: 5px;
+  }
 
-    .stat .lbl {
-      font-family: 'Courier New', monospace;
-      font-size: 10px;
-      color: var(--muted);
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-    }
+  /* === ALERT PREVIEW === */
+  .alert-section {
+    padding: 28px 0;
+  }
 
-    #alert {
-      max-width: 600px;
-      margin: 0 auto 80px;
-      padding: 0 24px;
-    }
+  .section-title {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 14px;
+    padding: 0 4px;
+  }
 
-    #alert h2 {
-      font-family: 'Courier New', monospace;
-      font-size: 11px;
-      letter-spacing: 0.2em;
-      color: var(--muted);
-      text-transform: uppercase;
-      margin-bottom: 24px;
-      text-align: center;
-    }
+  .alert-card {
+    background: var(--bg-card);
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    overflow: hidden;
+  }
 
-    .alert-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      overflow: hidden;
-    }
+  .alert-header {
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--border-light);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
 
-    .alert-header {
-      background: #0e0e16;
-      padding: 16px 20px;
-      border-bottom: 1px solid var(--border);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
+  .alert-header-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
 
-    .alert-header .from {
-      font-family: 'Courier New', monospace;
-      font-size: 11px;
-      color: var(--muted);
-    }
+  .alert-logo {
+    font-weight: 800;
+    font-size: 14px;
+  }
 
-    .alert-header .from strong { color: var(--text); }
+  .alert-logo .i { color: var(--blue-accent); }
+  .alert-logo .signal { color: var(--red); }
 
-    .alert-urgency {
-      font-family: 'Courier New', monospace;
-      font-size: 10px;
-      color: var(--accent);
-      background: rgba(192,57,43,0.08);
-      border: 1px solid rgba(192,57,43,0.2);
-      padding: 3px 8px;
-      border-radius: 2px;
-      letter-spacing: 0.1em;
-    }
+  .alert-source {
+    font-size: 11px;
+    color: var(--text-muted);
+    font-weight: 400;
+  }
 
-    .alert-body { padding: 24px; }
+  .badge-high {
+    background: var(--red);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 12px;
+    border-radius: 20px;
+    letter-spacing: 0.3px;
+  }
 
-    .alert-title {
-      font-size: 20px;
-      font-style: italic;
-      margin-bottom: 6px;
-    }
+  .alert-entity {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border-light);
+  }
 
-    .alert-meta {
-      font-family: 'Courier New', monospace;
-      font-size: 10px;
-      color: var(--muted);
-      letter-spacing: 0.08em;
-      margin-bottom: 20px;
-    }
+  .entity-name {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--navy);
+  }
 
-    .alert-section { margin-bottom: 18px; }
+  .entity-meta {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 4px;
+    font-weight: 400;
+  }
 
-    .alert-section h4 {
-      font-family: 'Courier New', monospace;
-      font-size: 10px;
-      letter-spacing: 0.15em;
-      color: var(--muted);
-      text-transform: uppercase;
-      margin-bottom: 8px;
-    }
+  .alert-body { padding: 18px 20px; }
 
-    .alert-section p {
-      font-size: 14px;
-      line-height: 1.65;
-      color: #c8c8d8;
-    }
+  .alert-block { margin-bottom: 18px; }
+  .alert-block:last-of-type { margin-bottom: 0; }
 
-    .alert-footer {
-      border-top: 1px solid var(--border);
-      padding: 12px 24px;
-      display: flex;
-      gap: 12px;
-    }
+  .alert-block-title {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--navy);
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    margin-bottom: 5px;
+  }
 
-    .alert-footer a {
-      font-family: 'Courier New', monospace;
-      font-size: 10px;
-      color: var(--muted);
-      text-decoration: none;
-      letter-spacing: 0.08em;
-      border: 1px solid var(--border);
-      padding: 5px 10px;
-      border-radius: 2px;
-    }
+  .alert-block-icon {
+    margin-right: 4px;
+  }
 
-    .alert-footer a:hover { color: var(--text); border-color: var(--muted); }
+  .alert-block-text {
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--text-secondary);
+    line-height: 1.65;
+  }
 
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 20px 32px;
-      text-align: center;
-      font-family: 'Courier New', monospace;
-      font-size: 10px;
-      color: #444455;
-      letter-spacing: 0.1em;
-    }
-  </style>
+  .alert-actions {
+    display: flex;
+    gap: 16px;
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border-light);
+  }
+
+  .alert-action {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--blue-link);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .alert-action:hover { color: var(--navy); }
+
+  /* === FOOTER === */
+  .footer {
+    text-align: center;
+    padding: 20px;
+    margin-top: auto;
+  }
+
+  .footer-text {
+    font-size: 11px;
+    font-weight: 400;
+    color: var(--text-hint);
+  }
+
+  /* === RESPONSIVE === */
+  @media (max-width: 500px) {
+    .hero-logo { font-size: 40px; }
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    .submit-row { flex-direction: column; }
+    .header { padding: 12px 16px; }
+    .form-section { padding: 20px 16px; }
+    .hero { padding: 36px 16px 32px; }
+  }
+</style>
 </head>
 <body>
 
-  <nav>
-    <div class="brand">i<span>Signal</span></div>
-    <div style="display:flex;align-items:center;gap:16px;">
-      <a href="#alert">Alert format</a>
-      <span class="badge">LIVE · v2.2.0</span>
+<div class="page-wrapper">
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header-left">
+      <span class="logo"><span class="i">i</span><span class="signal">Signal</span></span>
+      <span class="badge-live">LIVE · v2.4.0</span>
     </div>
-  </nav>
+    <a href="#alert" class="header-link">Alert format ↓</a>
+  </header>
 
-  <div class="hero">
-    <h1>i<span>Signal</span></h1>
-    <p>Automated sanctions &amp; compliance intelligence for the financial market.</p>
+  <div class="main-content">
 
-    <div class="form-card">
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-logo"><span class="i">i</span><span class="signal">Signal</span></div>
+      <p class="hero-sub">Automated sanctions &amp; compliance intelligence for the financial market.</p>
+    </section>
 
-      <div class="field">
-        <label>Article URL</label>
-        <input type="url" id="urlInput" placeholder="https://www.finma.ch/en/news/..." />
+    <!-- FORM -->
+    <section class="form-section">
+      <form id="intake-form" onsubmit="submitArticle(event)">
+        <div class="input-group">
+          <input type="url" class="input-field" id="article-url" placeholder="Article URL" required>
+        </div>
+        <div class="input-group">
+          <textarea class="input-field" id="analyst-context" placeholder="Analyst context (optional) — your intel, not in the article"></textarea>
+        </div>
+        <div class="submit-row">
+          <input type="email" class="input-field" id="user-email" placeholder="Your email (optional) — receive a copy">
+          <button type="submit" class="btn-submit">Submit →</button>
+        </div>
+      </form>
+      <div class="form-features">
+        <span class="feature-tag">Any source</span>
+        <span class="feature-tag">Bypasses relevance filter</span>
+        <span class="feature-tag">IP → 72h re-scan</span>
+        <span class="feature-tag">Analyst context injected</span>
       </div>
+    </section>
 
-      <div class="field">
-        <label>Analyst Context <span class="optional">optional — your intel, not in the article</span></label>
-        <textarea id="contextInput" placeholder="e.g. This person also holds a CFO role at Bank X · Contact confirmed institution is under informal FINMA watch · BD team has this account marked as warm"></textarea>
+    <!-- STATS -->
+    <div class="stats-grid">
+      <div class="stat-cell">
+        <div class="stat-number">10</div>
+        <div class="stat-label">RSS sources</div>
       </div>
-
-      <div class="field">
-        <label>Your Email <span class="optional">optional — receive a copy of the alert</span></label>
-        <input type="email" id="emailInput" placeholder="your.name@six-group.com" />
+      <div class="stat-cell">
+        <div class="stat-number">4</div>
+        <div class="stat-label">Intel tiers</div>
       </div>
-
-      <button class="submit-btn" id="submitBtn" onclick="submitArticle()">Submit →</button>
-      <div id="status"></div>
+      <div class="stat-cell">
+        <div class="stat-number">72h</div>
+        <div class="stat-label">Comment re-scan</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-number">2×</div>
+        <div class="stat-label">Daily runs</div>
+      </div>
     </div>
 
-    <div class="checklist">
-      <span>Any source</span>
-      <span>Bypasses relevance filter</span>
-      <span>IP → 72h re-scan</span>
-      <span>Analyst context injected</span>
-    </div>
+    <!-- ALERT PREVIEW -->
+    <section class="alert-section" id="alert">
+      <div class="section-title">Output · What the alert looks like</div>
+
+      <div class="alert-card">
+        <div class="alert-header">
+          <div class="alert-header-left">
+            <span class="alert-logo"><span class="i">i</span><span class="signal">Signal</span></span>
+            <span class="alert-source">· iScanner · Initial Scan</span>
+          </div>
+          <span class="badge-high">HIGH</span>
+        </div>
+
+        <div class="alert-entity">
+          <div class="entity-name">Julius Bär Gruppe AG</div>
+          <div class="entity-meta">Generated 25 Feb 2026, 10:32 CET · AI-powered analysis by Claude Sonnet · Enforcement · FINMA · AML</div>
+        </div>
+
+        <div class="alert-body">
+          <div class="alert-block">
+            <div class="alert-block-title"><span class="alert-block-icon">📰</span> What Happened</div>
+            <div class="alert-block-text">FINMA has opened formal enforcement proceedings against Julius Bär following identified deficiencies in the bank's AML controls related to its correspondent banking relationships in Eastern Europe. The regulator has appointed an independent auditor to assess the scope of the control failures.</div>
+          </div>
+
+          <div class="alert-block">
+            <div class="alert-block-title"><span class="alert-block-icon">⚡</span> Why It Matters</div>
+            <div class="alert-block-text">Julius Bär manages approximately CHF 470bn in AUM and operates one of Switzerland's largest private banking networks. FINMA enforcement at this scale typically triggers a full compliance technology review within 12–18 months.</div>
+          </div>
+
+          <div class="alert-block">
+            <div class="alert-block-title"><span class="alert-block-icon">🎯</span> Sales Angle</div>
+            <div class="alert-block-text">The appointment of an independent auditor creates an immediate opening: the Chief Compliance Officer will need to evidence a structured remediation programme. SSMS directly addresses the sanctions screening control gaps identified by FINMA. Initiate contact with the CCO within 30 days.</div>
+          </div>
+
+          <div class="alert-actions">
+            <a href="#" class="alert-action">Read Source →</a>
+            <a href="#" class="alert-action">Open in Notion →</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
   </div>
 
-  <div class="stats">
-    <div class="stat"><span class="num">10</span><span class="lbl">RSS sources</span></div>
-    <div class="stat"><span class="num">4</span><span class="lbl">Intel tiers</span></div>
-    <div class="stat"><span class="num">72h</span><span class="lbl">Comment re-scan</span></div>
-    <div class="stat"><span class="num">2×</span><span class="lbl">Daily runs</span></div>
-  </div>
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-text">iSignal · iScanner Analytics Tool · Internal Use Only · Version 2.4.0 · March 2026 · Powered by Claude Sonnet &amp; Make.com</div>
+  </footer>
 
-  <div id="alert">
-    <h2>03 — Output · What the alert looks like</h2>
-    <div class="alert-card">
-      <div class="alert-header">
-        <div class="from"><strong>iSignal</strong> · iScanner · Initial Scan</div>
-        <div class="alert-urgency">● HIGH</div>
-      </div>
-      <div class="alert-body">
-        <div class="alert-title">Julius Bär Gruppe AG</div>
-        <div class="alert-meta">⚡ Generated 25 Feb 2026, 10:32 CET · AI-powered analysis by Claude Sonnet · Enforcement · FINMA · AML</div>
-        <div class="alert-section">
-          <h4>📰 What Happened</h4>
-          <p>FINMA has opened formal enforcement proceedings against Julius Bär following identified deficiencies in the bank's AML controls related to its correspondent banking relationships in Eastern Europe. The regulator has appointed an independent auditor to assess the scope of the control failures.</p>
-        </div>
-        <div class="alert-section">
-          <h4>⚡ Why It Matters</h4>
-          <p>Julius Bär manages approximately CHF 470bn in AUM and operates one of Switzerland's largest private banking networks. FINMA enforcement at this scale typically triggers a full compliance technology review within 12–18 months.</p>
-        </div>
-        <div class="alert-section">
-          <h4>🎯 Sales Angle</h4>
-          <p>The appointment of an independent auditor creates an immediate opening: the Chief Compliance Officer will need to evidence a structured remediation programme. SSMS directly addresses the sanctions screening control gaps identified by FINMA. Initiate contact with the CCO within 30 days.</p>
-        </div>
-      </div>
-      <div class="alert-footer">
-        <a href="#">Read Source</a>
-        <a href="#">Open in Notion</a>
-      </div>
-    </div>
-  </div>
+</div>
 
-  <footer>iSignal · iScanner Analytics Tool · Internal Use Only · Version 2.2.0 · March 2026 · Powered by Claude Sonnet &amp; Make.com</footer>
+<script>
+function submitArticle(e) {
+  e.preventDefault();
+  const url = document.getElementById('article-url').value;
+  const context = document.getElementById('analyst-context').value;
+  const email = document.getElementById('user-email').value;
 
-  <script>
-    const WEBHOOK = 'https://hook.eu1.make.com/5xssdul9iklj53kcw927dbrvehdkjyhh';
+  let webhookUrl = 'https://hook.eu1.make.com/5xssdul9iklj53kcw927dbrvehdkjyhh?url=' + encodeURIComponent(url);
+  if (context) webhookUrl += '&context=' + encodeURIComponent(context);
+  if (email) webhookUrl += '&email=' + encodeURIComponent(email);
 
-    async function submitArticle() {
-      const urlVal     = document.getElementById('urlInput').value.trim();
-      const contextVal = document.getElementById('contextInput').value.trim();
-      const emailVal   = document.getElementById('emailInput').value.trim();
-      const status     = document.getElementById('status');
-      const btn        = document.getElementById('submitBtn');
-
-      if (!urlVal) {
-        status.className = 'error';
-        status.textContent = '✗ Please enter an article URL.';
-        return;
-      }
-
-      status.className = 'pending';
-      status.textContent = '⏱ Submitting…';
-      btn.disabled = true;
-
-      let webhookUrl = WEBHOOK + '?url=' + encodeURIComponent(urlVal);
-      if (contextVal) webhookUrl += '&context=' + encodeURIComponent(contextVal);
-      if (emailVal)   webhookUrl += '&recipient=' + encodeURIComponent(emailVal);
-
-      try {
-        const res = await fetch(webhookUrl);
-        if (res.ok) {
-          status.className = 'success';
-          status.textContent = '✓ Submitted. Intelligence brief incoming.';
-          document.getElementById('urlInput').value     = '';
-          document.getElementById('contextInput').value = '';
-          document.getElementById('emailInput').value   = '';
-        } else {
-          throw new Error('HTTP ' + res.status);
-        }
-      } catch (err) {
-        status.className = 'error';
-        status.textContent = '✗ Submission failed. Try the direct webhook method.';
-      } finally {
-        btn.disabled = false;
-      }
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-      document.getElementById('urlInput').addEventListener('keydown', e => {
-        if (e.key === 'Enter') submitArticle();
-      });
+  fetch(webhookUrl, { method: 'GET', mode: 'no-cors' })
+    .then(() => {
+      document.getElementById('intake-form').reset();
+      const btn = document.querySelector('.btn-submit');
+      btn.textContent = 'Sent ✓';
+      btn.style.background = '#1a8a4a';
+      setTimeout(() => { btn.textContent = 'Submit →'; btn.style.background = ''; }, 3000);
+    })
+    .catch(() => {
+      const btn = document.querySelector('.btn-submit');
+      btn.textContent = 'Error — retry';
+      btn.style.background = '#a01b18';
+      setTimeout(() => { btn.textContent = 'Submit →'; btn.style.background = ''; }, 3000);
     });
-  </script>
+}
+</script>
 
 </body>
 </html>
