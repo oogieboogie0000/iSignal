@@ -1,520 +1,547 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>iSignal</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<style>
-  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>iSignal</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@1,700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #f5f5f7;
+      --surface: #ffffff;
+      --border: #e0e0e6;
+      --accent: #c0392b;
+      --accent-dim: #a5321f;
+      --text: #1a1a2e;
+      --muted: #6b6b80;
+      --green: #27ae60;
+      --amber: #e67e22;
+      --red: #c0392b;
+    }
 
-  :root {
-    --navy: #0a2a5e;
-    --navy-light: #0f3470;
-    --blue-accent: #6ab0f3;
-    --blue-link: #1a5dab;
-    --red: #c0211d;
-    --red-dark: #a01b18;
-    --bg-page: #f4f5f8;
-    --bg-card: #ffffff;
-    --bg-input: #f0f2f6;
-    --border: #dde0e8;
-    --border-light: #e8eaef;
-    --text-primary: #1a2332;
-    --text-secondary: #5a6577;
-    --text-muted: #8a93a3;
-    --text-hint: #b0b6c3;
-  }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
-  body {
-    font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    background: var(--bg-page);
-    color: var(--text-primary);
-    line-height: 1.5;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Georgia', serif;
+      min-height: 100vh;
+    }
 
-  /* === LAYOUT === */
-  .page-wrapper {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-  }
+    /* ── NAV ── */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 32px;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface);
+    }
 
-  .main-content {
-    flex: 1;
-    max-width: 680px;
-    width: 100%;
-    margin: 0 auto;
-    padding: 0 16px;
-  }
+    nav .brand {
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+      letter-spacing: 0.15em;
+      color: var(--muted);
+    }
 
-  /* === HEADER === */
-  .header {
-    background: var(--navy);
-    padding: 14px 24px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-  }
+    nav .brand span { color: var(--text); font-style: italic; }
 
-  .header-left {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
+    nav a {
+      font-family: 'Courier New', monospace;
+      font-size: 11px;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: 0.1em;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 2px;
+    }
 
-  .logo {
-    font-weight: 800;
-    font-size: 20px;
-    letter-spacing: 0.3px;
-    text-decoration: none;
-  }
+    nav a:hover { color: var(--text); border-color: var(--muted); }
 
-  .logo .i { color: var(--blue-accent); }
-  .logo .signal { color: var(--red); }
+    .badge {
+      font-family: 'Courier New', monospace;
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      color: var(--green);
+      background: rgba(39,174,96,0.08);
+      border: 1px solid rgba(39,174,96,0.2);
+      padding: 3px 8px;
+      border-radius: 2px;
+    }
 
-  .badge-live {
-    background: rgba(255,255,255,0.12);
-    color: var(--blue-accent);
-    font-size: 11px;
-    font-weight: 500;
-    padding: 3px 10px;
-    border-radius: 20px;
-    letter-spacing: 0.3px;
-  }
+    /* ── HERO ── */
+    .hero {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 72px 24px 48px;
+      text-align: center;
+    }
 
-  .header-link {
-    color: var(--blue-accent);
-    font-size: 12px;
-    font-weight: 500;
-    text-decoration: none;
-    opacity: 0.8;
-    transition: opacity 0.2s;
-  }
+    .hero h1 {
+      font-size: clamp(42px, 8vw, 72px);
+      font-family: 'Spectral', Georgia, serif;
+      font-style: italic;
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: 16px;
+      color: var(--text);
+    }
 
-  .header-link:hover { opacity: 1; }
+    .hero p {
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+      line-height: 1.7;
+      max-width: 440px;
+      margin: 0 auto 40px;
+    }
 
-  /* === HERO === */
-  .hero {
-    background: var(--bg-card);
-    text-align: center;
-    padding: 48px 24px 40px;
-    border-bottom: 1px solid var(--border-light);
-  }
+    /* ── FORM ── */
+    .submit-section {
+      max-width: 520px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
 
-  .hero-logo {
-    font-weight: 800;
-    font-size: 52px;
-    letter-spacing: 0.5px;
-    margin-bottom: 10px;
-  }
+    .input-group {
+      margin-bottom: 16px;
+    }
 
-  .hero-logo .i { color: var(--blue-accent); }
-  .hero-logo .signal { color: var(--red); }
+    .input-label {
+      font-family: 'Courier New', monospace;
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 6px;
+      display: block;
+    }
 
-  .hero-sub {
-    font-size: 14px;
-    font-weight: 400;
-    color: var(--text-secondary);
-    max-width: 420px;
-    margin: 0 auto;
-  }
+    .url-input {
+      width: 100%;
+      padding: 14px 18px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      border-radius: 4px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
 
-  /* === FORM === */
-  .form-section {
-    background: var(--bg-card);
-    padding: 24px;
-    border-bottom: 1px solid var(--border-light);
-  }
+    .url-input:focus {
+      border-color: var(--accent);
+    }
 
-  .input-group { margin-bottom: 10px; }
+    .url-input::placeholder {
+      color: #999aab;
+    }
 
-  .input-field {
-    width: 100%;
-    background: var(--bg-input);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 11px 14px;
-    font-family: inherit;
-    font-size: 14px;
-    font-weight: 400;
-    color: var(--text-primary);
-    outline: none;
-    transition: border-color 0.2s, box-shadow 0.2s;
-  }
+    .context-input {
+      width: 100%;
+      padding: 14px 18px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+      border-radius: 4px;
+      outline: none;
+      transition: border-color 0.2s;
+      resize: vertical;
+      min-height: 72px;
+      line-height: 1.5;
+    }
 
-  .input-field::placeholder { color: var(--text-hint); font-weight: 400; }
-  .input-field:focus {
-    border-color: var(--blue-accent);
-    box-shadow: 0 0 0 3px rgba(106, 176, 243, 0.15);
-  }
+    .context-input:focus {
+      border-color: var(--accent);
+    }
 
-  textarea.input-field {
-    resize: vertical;
-    min-height: 60px;
-  }
+    .context-input::placeholder {
+      color: #999aab;
+    }
 
-  .submit-row {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 14px;
-  }
+    .email-input {
+      width: 100%;
+      padding: 14px 18px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+      border-radius: 4px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
 
-  .submit-row .input-field { flex: 1; }
+    .email-input:focus {
+      border-color: var(--accent);
+    }
 
-  .btn-submit {
-    background: var(--navy);
-    color: #fff;
-    border: none;
-    border-radius: 8px;
-    padding: 11px 24px;
-    font-family: inherit;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background 0.2s;
-    white-space: nowrap;
-  }
+    .email-input::placeholder {
+      color: #999aab;
+    }
 
-  .btn-submit:hover { background: var(--navy-light); }
+    .submit-btn {
+      width: 100%;
+      padding: 14px;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+      letter-spacing: 0.1em;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: background 0.2s;
+      margin-top: 8px;
+    }
 
-  .form-features {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    margin-top: 4px;
-  }
+    .submit-btn:hover { background: #a5321f; }
+    .submit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
-  .feature-tag {
-    font-size: 11px;
-    font-weight: 500;
-    color: var(--text-muted);
-    background: var(--bg-input);
-    padding: 4px 10px;
-    border-radius: 20px;
-  }
+    .status-msg {
+      font-family: 'Courier New', monospace;
+      font-size: 12px;
+      margin-top: 12px;
+      text-align: center;
+      min-height: 20px;
+    }
 
-  /* === STATS === */
-  .stats-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1px;
-    background: var(--border-light);
-  }
+    .status-msg.success { color: var(--green); }
+    .status-msg.error { color: var(--red); }
 
-  .stat-cell {
-    background: var(--bg-card);
-    padding: 20px 12px;
-    text-align: center;
-  }
+    /* ── FEATURES ── */
+    .features {
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+      padding: 36px 24px 0;
+      flex-wrap: wrap;
+    }
 
-  .stat-number {
-    font-size: 24px;
-    font-weight: 700;
-    color: var(--navy);
-    line-height: 1;
-  }
+    .features span {
+      font-family: 'Courier New', monospace;
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+    }
 
-  .stat-label {
-    font-size: 11px;
-    font-weight: 500;
-    color: var(--text-muted);
-    margin-top: 5px;
-  }
+    /* ── STATS ── */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      margin-top: 64px;
+    }
 
-  /* === ALERT PREVIEW === */
-  .alert-section {
-    padding: 28px 0;
-  }
+    .stat {
+      background: var(--surface);
+      padding: 32px 24px;
+      text-align: center;
+    }
 
-  .section-title {
-    font-size: 11px;
-    font-weight: 600;
-    color: var(--text-muted);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 14px;
-    padding: 0 4px;
-  }
+    .stat .num {
+      font-family: 'Spectral', Georgia, serif;
+      font-style: italic;
+      font-size: 36px;
+      color: var(--text);
+    }
 
-  .alert-card {
-    background: var(--bg-card);
-    border-radius: 10px;
-    border: 1px solid var(--border);
-    overflow: hidden;
-  }
+    .stat .label {
+      font-family: 'Courier New', monospace;
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      margin-top: 8px;
+      text-transform: uppercase;
+    }
 
-  .alert-header {
-    padding: 14px 20px;
-    border-bottom: 1px solid var(--border-light);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
+    /* ── SAMPLE ALERT ── */
+    .sample-section {
+      padding: 64px 24px;
+      max-width: 680px;
+      margin: 0 auto;
+    }
 
-  .alert-header-left {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
+    .sample-header {
+      font-family: 'Courier New', monospace;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      text-align: center;
+      margin-bottom: 32px;
+      text-transform: uppercase;
+    }
 
-  .alert-logo {
-    font-weight: 800;
-    font-size: 14px;
-  }
+    .alert-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      overflow: hidden;
+    }
 
-  .alert-logo .i { color: var(--blue-accent); }
-  .alert-logo .signal { color: var(--red); }
+    .alert-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 24px;
+      border-bottom: 1px solid var(--border);
+    }
 
-  .alert-source {
-    font-size: 11px;
-    color: var(--text-muted);
-    font-weight: 400;
-  }
+    .alert-brand {
+      font-family: 'Courier New', monospace;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+    }
 
-  .badge-high {
-    background: var(--red);
-    color: #fff;
-    font-size: 11px;
-    font-weight: 600;
-    padding: 3px 12px;
-    border-radius: 20px;
-    letter-spacing: 0.3px;
-  }
+    .alert-brand strong { color: var(--text); font-style: italic; }
 
-  .alert-entity {
-    padding: 16px 20px;
-    border-bottom: 1px solid var(--border-light);
-  }
+    .urgency-badge {
+      font-family: 'Courier New', monospace;
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      color: var(--red);
+      background: rgba(192,57,43,0.08);
+      border: 1px solid rgba(192,57,43,0.2);
+      padding: 3px 10px;
+      border-radius: 2px;
+    }
 
-  .entity-name {
-    font-size: 17px;
-    font-weight: 600;
-    color: var(--navy);
-  }
+    .alert-entity {
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--border);
+    }
 
-  .entity-meta {
-    font-size: 11px;
-    color: var(--text-muted);
-    margin-top: 4px;
-    font-weight: 400;
-  }
+    .alert-entity h2 {
+      font-family: 'Spectral', Georgia, serif;
+      font-style: italic;
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--text);
+    }
 
-  .alert-body { padding: 18px 20px; }
+    .alert-meta {
+      font-family: 'Courier New', monospace;
+      font-size: 10px;
+      color: #999aab;
+      margin-top: 8px;
+      letter-spacing: 0.03em;
+      line-height: 1.5;
+    }
 
-  .alert-block { margin-bottom: 18px; }
-  .alert-block:last-of-type { margin-bottom: 0; }
+    .alert-body { padding: 24px; }
 
-  .alert-block-title {
-    font-size: 11px;
-    font-weight: 600;
-    color: var(--navy);
-    text-transform: uppercase;
-    letter-spacing: 0.4px;
-    margin-bottom: 5px;
-  }
+    .alert-section { margin-bottom: 24px; }
+    .alert-section:last-child { margin-bottom: 0; }
 
-  .alert-block-icon {
-    margin-right: 4px;
-  }
+    .alert-section h3 {
+      font-family: 'Courier New', monospace;
+      font-size: 12px;
+      letter-spacing: 0.05em;
+      margin-bottom: 10px;
+      color: var(--text);
+    }
 
-  .alert-block-text {
-    font-size: 13px;
-    font-weight: 400;
-    color: var(--text-secondary);
-    line-height: 1.65;
-  }
+    .alert-section p {
+      font-size: 14px;
+      line-height: 1.7;
+      color: #555570;
+    }
 
-  .alert-actions {
-    display: flex;
-    gap: 16px;
-    margin-top: 20px;
-    padding-top: 16px;
-    border-top: 1px solid var(--border-light);
-  }
+    .alert-links {
+      display: flex;
+      gap: 16px;
+      padding: 16px 24px;
+      border-top: 1px solid var(--border);
+    }
 
-  .alert-action {
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--blue-link);
-    text-decoration: none;
-    transition: color 0.2s;
-  }
+    .alert-links a {
+      font-family: 'Courier New', monospace;
+      font-size: 11px;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 2px;
+    }
 
-  .alert-action:hover { color: var(--navy); }
+    .alert-links a:hover { color: var(--text); border-color: var(--muted); }
 
-  /* === FOOTER === */
-  .footer {
-    text-align: center;
-    padding: 20px;
-    margin-top: auto;
-  }
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      padding: 48px 24px;
+      font-family: 'Courier New', monospace;
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      color: #999aab;
+      border-top: 1px solid var(--border);
+    }
 
-  .footer-text {
-    font-size: 11px;
-    font-weight: 400;
-    color: var(--text-hint);
-  }
-
-  /* === RESPONSIVE === */
-  @media (max-width: 500px) {
-    .hero-logo { font-size: 40px; }
-    .stats-grid { grid-template-columns: repeat(2, 1fr); }
-    .submit-row { flex-direction: column; }
-    .header { padding: 12px 16px; }
-    .form-section { padding: 20px 16px; }
-    .hero { padding: 36px 16px 32px; }
-  }
-</style>
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      .stats { grid-template-columns: repeat(2, 1fr); }
+      nav { padding: 14px 16px; }
+      .hero { padding: 48px 16px 32px; }
+    }
+  </style>
 </head>
 <body>
 
-<div class="page-wrapper">
-
-  <!-- HEADER -->
-  <header class="header">
-    <div class="header-left">
-      <span class="logo"><span class="i">i</span><span class="signal">Signal</span></span>
-      <span class="badge-live">LIVE · v2.4.0</span>
+  <!-- NAV -->
+  <nav>
+    <div class="brand"><span>i<span style="color:var(--accent)">Signal</span></span></div>
+    <div style="display:flex;align-items:center;gap:16px;">
+      <span class="badge">LIVE · v2.4.0</span>
+      <a href="#alert">Alert format ↓</a>
     </div>
-    <a href="#alert" class="header-link">Alert format ↓</a>
-  </header>
+  </nav>
 
-  <div class="main-content">
+  <!-- HERO -->
+  <div class="hero">
+    <h1>i<span style="color:var(--accent)">Signal</span></h1>
+    <p>Automated sanctions &amp; compliance intelligence for the financial market.</p>
 
-    <!-- HERO -->
-    <section class="hero">
-      <div class="hero-logo"><span class="i">i</span><span class="signal">Signal</span></div>
-      <p class="hero-sub">Automated sanctions &amp; compliance intelligence for the financial market.</p>
-    </section>
+    <!-- SUBMIT FORM -->
+    <div class="submit-section">
 
-    <!-- FORM -->
-    <section class="form-section">
-      <form id="intake-form" onsubmit="submitArticle(event)">
-        <div class="input-group">
-          <input type="url" class="input-field" id="article-url" placeholder="Article URL" required>
-        </div>
-        <div class="input-group">
-          <textarea class="input-field" id="analyst-context" placeholder="Analyst context (optional) — your intel, not in the article"></textarea>
-        </div>
-        <div class="submit-row">
-          <input type="email" class="input-field" id="user-email" placeholder="Your email (optional) — receive a copy">
-          <button type="submit" class="btn-submit">Submit →</button>
-        </div>
-      </form>
-      <div class="form-features">
-        <span class="feature-tag">Any source</span>
-        <span class="feature-tag">Bypasses relevance filter</span>
-        <span class="feature-tag">IP → 72h re-scan</span>
-        <span class="feature-tag">Analyst context injected</span>
+      <div class="input-group">
+        <label class="input-label" for="urlInput">Article URL</label>
+        <input type="url" id="urlInput" class="url-input" placeholder="https://..." />
       </div>
-    </section>
 
-    <!-- STATS -->
-    <div class="stats-grid">
-      <div class="stat-cell">
-        <div class="stat-number">10</div>
-        <div class="stat-label">RSS sources</div>
+      <div class="input-group">
+        <label class="input-label" for="contextInput">Analyst Context <span style="color:#999aab;text-transform:none;">(optional)</span></label>
+        <textarea id="contextInput" class="context-input" placeholder="What do you know that's not in the article? Dual role, warm account, tip from a contact..."></textarea>
       </div>
-      <div class="stat-cell">
-        <div class="stat-number">4</div>
-        <div class="stat-label">Intel tiers</div>
+
+      <div class="input-group">
+        <label class="input-label" for="emailInput">Your Email <span style="color:#999aab;text-transform:none;">(optional — alert will be sent to you)</span></label>
+        <input type="email" id="emailInput" class="email-input" placeholder="you@example.com" />
       </div>
-      <div class="stat-cell">
-        <div class="stat-number">72h</div>
-        <div class="stat-label">Comment re-scan</div>
-      </div>
-      <div class="stat-cell">
-        <div class="stat-number">2×</div>
-        <div class="stat-label">Daily runs</div>
-      </div>
+
+      <button class="submit-btn" onclick="submitArticle()">Submit →</button>
+      <div id="statusMsg" class="status-msg"></div>
     </div>
 
-    <!-- ALERT PREVIEW -->
-    <section class="alert-section" id="alert">
-      <div class="section-title">Output · What the alert looks like</div>
+    <!-- FEATURES -->
+    <div class="features">
+      <span>Any source</span>
+      <span>Bypasses relevance filter</span>
+      <span>IP → 72h re-scan</span>
+      <span>Analyst context injected</span>
+    </div>
+  </div>
 
-      <div class="alert-card">
-        <div class="alert-header">
-          <div class="alert-header-left">
-            <span class="alert-logo"><span class="i">i</span><span class="signal">Signal</span></span>
-            <span class="alert-source">· iScanner · Initial Scan</span>
-          </div>
-          <span class="badge-high">HIGH</span>
+  <!-- STATS -->
+  <div class="stats">
+    <div class="stat"><div class="num">12</div><div class="label">RSS sources</div></div>
+    <div class="stat"><div class="num">4</div><div class="label">Intel tiers</div></div>
+    <div class="stat"><div class="num">72h</div><div class="label">Comment re-scan</div></div>
+    <div class="stat"><div class="num">2×</div><div class="label">Daily runs</div></div>
+  </div>
+
+  <!-- SAMPLE ALERT -->
+  <div class="sample-section" id="alert">
+    <div class="sample-header">Output · What the alert looks like</div>
+
+    <div class="alert-card">
+      <div class="alert-top">
+        <div class="alert-brand"><strong>i<span style="color:var(--accent)">Signal</span></strong> · iScanner · Initial Scan</div>
+        <span class="urgency-badge">HIGH</span>
+      </div>
+
+      <div class="alert-entity">
+        <h2>Julius Bär Gruppe AG</h2>
+        <div class="alert-meta">Generated 25 Feb 2026, 10:32 CET · AI-powered analysis by Claude Sonnet · Enforcement · FINMA · AML</div>
+      </div>
+
+      <div class="alert-body">
+        <div class="alert-section">
+          <h3>📰 What Happened</h3>
+          <p>FINMA has opened formal enforcement proceedings against Julius Bär following identified deficiencies in the bank's AML controls related to its correspondent banking relationships in Eastern Europe. The regulator has appointed an independent auditor to assess the scope of the control failures.</p>
         </div>
-
-        <div class="alert-entity">
-          <div class="entity-name">Julius Bär Gruppe AG</div>
-          <div class="entity-meta">Generated 25 Feb 2026, 10:32 CET · AI-powered analysis by Claude Sonnet · Enforcement · FINMA · AML</div>
+        <div class="alert-section">
+          <h3>⚡ Why It Matters</h3>
+          <p>Julius Bär manages approximately CHF 470bn in AUM and operates one of Switzerland's largest private banking networks. FINMA enforcement at this scale typically triggers a full compliance technology review within 12–18 months.</p>
         </div>
-
-        <div class="alert-body">
-          <div class="alert-block">
-            <div class="alert-block-title"><span class="alert-block-icon">📰</span> What Happened</div>
-            <div class="alert-block-text">FINMA has opened formal enforcement proceedings against Julius Bär following identified deficiencies in the bank's AML controls related to its correspondent banking relationships in Eastern Europe. The regulator has appointed an independent auditor to assess the scope of the control failures.</div>
-          </div>
-
-          <div class="alert-block">
-            <div class="alert-block-title"><span class="alert-block-icon">⚡</span> Why It Matters</div>
-            <div class="alert-block-text">Julius Bär manages approximately CHF 470bn in AUM and operates one of Switzerland's largest private banking networks. FINMA enforcement at this scale typically triggers a full compliance technology review within 12–18 months.</div>
-          </div>
-
-          <div class="alert-block">
-            <div class="alert-block-title"><span class="alert-block-icon">🎯</span> Sales Angle</div>
-            <div class="alert-block-text">The appointment of an independent auditor creates an immediate opening: the Chief Compliance Officer will need to evidence a structured remediation programme. SSMS directly addresses the sanctions screening control gaps identified by FINMA. Initiate contact with the CCO within 30 days.</div>
-          </div>
-
-          <div class="alert-actions">
-            <a href="#" class="alert-action">Read Source →</a>
-            <a href="#" class="alert-action">Open in Notion →</a>
-          </div>
+        <div class="alert-section">
+          <h3>🎯 Sales Angle</h3>
+          <p>The appointment of an independent auditor creates an immediate opening: the Chief Compliance Officer will need to evidence a structured remediation programme. SSMS directly addresses the sanctions screening control gaps identified by FINMA. Initiate contact with the CCO within 30 days.</p>
         </div>
       </div>
-    </section>
 
+      <div class="alert-links">
+        <a href="#">Read Source →</a>
+        <a href="#">Open in Notion →</a>
+      </div>
+    </div>
   </div>
 
   <!-- FOOTER -->
-  <footer class="footer">
-    <div class="footer-text">iSignal · iScanner Analytics Tool · Internal Use Only · Version 2.4.0 · March 2026 · Powered by Claude Sonnet &amp; Make.com</div>
+  <footer>
+    iSignal · iScanner Analytics Tool · Internal Use Only · Version 2.4.0 · March 2026 · Powered by Claude Sonnet &amp; Make.com
   </footer>
 
-</div>
+  <!-- SUBMIT LOGIC -->
+  <script>
+    async function submitArticle() {
+      const url     = document.getElementById('urlInput').value.trim();
+      const context = document.getElementById('contextInput').value.trim();
+      const email   = document.getElementById('emailInput').value.trim();
+      const status  = document.getElementById('statusMsg');
+      const btn     = document.querySelector('.submit-btn');
 
-<script>
-function submitArticle(e) {
-  e.preventDefault();
-  const url = document.getElementById('article-url').value;
-  const context = document.getElementById('analyst-context').value;
-  const email = document.getElementById('user-email').value;
+      if (!url) {
+        status.className = 'status-msg error';
+        status.textContent = '✗ Please enter an article URL.';
+        return;
+      }
 
-  let webhookUrl = 'https://hook.eu1.make.com/5xssdul9iklj53kcw927dbrvehdkjyhh?url=' + encodeURIComponent(url);
-  if (context) webhookUrl += '&context=' + encodeURIComponent(context);
-  if (email) webhookUrl += '&email=' + encodeURIComponent(email);
+      btn.disabled = true;
+      status.className = 'status-msg';
+      status.textContent = 'Submitting...';
 
-  fetch(webhookUrl, { method: 'GET', mode: 'no-cors' })
-    .then(() => {
-      document.getElementById('intake-form').reset();
-      const btn = document.querySelector('.btn-submit');
-      btn.textContent = 'Sent ✓';
-      btn.style.background = '#1a8a4a';
-      setTimeout(() => { btn.textContent = 'Submit →'; btn.style.background = ''; }, 3000);
-    })
-    .catch(() => {
-      const btn = document.querySelector('.btn-submit');
-      btn.textContent = 'Error — retry';
-      btn.style.background = '#a01b18';
-      setTimeout(() => { btn.textContent = 'Submit →'; btn.style.background = ''; }, 3000);
+      // Build webhook URL with parameters
+      let webhookUrl = 'https://hook.eu1.make.com/5xssdul9iklj53kcw927dbrvehdkjyhh?url=' + encodeURIComponent(url);
+      if (context) webhookUrl += '&context=' + encodeURIComponent(context);
+      if (email)   webhookUrl += '&recipient=' + encodeURIComponent(email);
+
+      try {
+        const res = await fetch(webhookUrl, { method: 'GET' });
+        if (res.ok) {
+          status.className = 'status-msg success';
+          status.textContent = '✓ Submitted. Intelligence brief incoming.';
+          document.getElementById('urlInput').value     = '';
+          document.getElementById('contextInput').value = '';
+          document.getElementById('emailInput').value   = '';
+        } else {
+          throw new Error('HTTP ' + res.status);
+        }
+      } catch (err) {
+        status.className = 'status-msg error';
+        status.textContent = '✗ Submission failed. Try the direct webhook method.';
+      } finally {
+        btn.disabled = false;
+      }
+    }
+
+    // Allow Enter key in URL field to submit
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('urlInput').addEventListener('keydown', e => {
+        if (e.key === 'Enter') submitArticle();
+      });
     });
-}
-</script>
+  </script>
 
 </body>
 </html>
